@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتائج تحليل البشرة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-white rounded-xl shadow-xl overflow-hidden">
+            <!-- Header Section -->
+            <div class="bg-indigo-600 text-white p-6 text-center">
+                <h1 class="text-3xl font-bold">
+                    <i class="fas fa-clipboard-check mr-2"></i>
+                    نتائج تحليل بشرتك
+                </h1>
+                <p class="mt-2 opacity-90">التوصيات المخصصة بناءً على تحليل بشرتك</p>
+            </div>
+
+            <!-- Results Section -->
+            <div class="p-6 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                        <h2 class="text-lg font-semibold text-blue-800 flex items-center">
+                            <i class="fas fa-user-circle mr-2"></i>
+                            نوع البشرة
+                        </h2>
+                        <p id="skinTypeResult" class="mt-2 text-xl font-bold text-blue-600"></p>
+                    </div>
+
+                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-100">
+                        <h2 class="text-lg font-semibold text-purple-800 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            المشاكل
+                        </h2>
+                        <p id="issuesResult" class="mt-2 text-purple-600"></p>
+                    </div>
+
+                    <div class="bg-amber-50 p-4 rounded-lg border border-amber-100">
+                        <h2 class="text-lg font-semibold text-amber-800 flex items-center">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            شدة المشاكل
+                        </h2>
+                        <div class="mt-2 flex items-center">
+                            <span id="severityResult" class="text-2xl font-bold text-amber-600 mr-2"></span>
+                            <span class="text-gray-500">/5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Section -->
+                <div class="mt-8">
+                    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 flex items-center">
+                        <i class="fas fa-gift mr-2 text-indigo-600"></i>
+                        المنتجات المقترحة
+                    </h2>
+                    <div id="recommendedProducts" class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6"></div>
+                </div>
+            </div>
+
+            <!-- Footer Section -->
+            <div class="bg-gray-50 px-6 py-4 text-center">
+                <div class="flex justify-center gap-4">
+                    <button onclick="window.location.href='manual-input.html'" 
+                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-full transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-redo mr-2"></i>
+                        إعادة التحليل
+                    </button>
+                    <button onclick="window.location.href='../checkout.html'"
+                            class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-full transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-shopping-cart mr-2"></i>
+                        سلة المشتريات
+                        <span id="cartCount" class="bg-white text-green-600 text-xs font-bold px-2 py-1 rounded-full ml-2">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/services/products.js"></script>
+    <script src="../js/services/results.js"></script>
+    <script>
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cartCount').textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        }
+        
+        // Parse URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const manualData = urlParams.get('manual');
+        
+        if (manualData) {
+            const analysisData = JSON.parse(decodeURIComponent(manualData));
+            displayResults(analysisData);
+        } else {
+            const savedAnalysis = localStorage.getItem('skinAnalysis');
+            if (savedAnalysis) {
+                displayResults(JSON.parse(savedAnalysis));
+            }
+        }
+    </script>
+</body>
+</html>
