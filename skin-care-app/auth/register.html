@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/pages/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1><i class="fas fa-user-plus"></i> إنشاء حساب جديد</h1>
+            <p>انضم إلينا وابدأ رحلة العناية ببشرتك</p>
+        </div>
+        
+        <form class="auth-form" id="registerForm">
+            <div class="form-step active" id="step1">
+                <div class="form-group">
+                    <label for="fullName">الاسم الكامل</label>
+                    <input type="text" id="fullName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">تأكيد كلمة المرور</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                
+                <button type="button" class="btn-primary next-btn" onclick="nextStep(1, 2)">
+                    التالي <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+            
+            <div class="form-step" id="step2">
+                <div class="form-group">
+                    <label>نوع البشرة</label>
+                    <div class="skin-type-options">
+                        <label class="skin-type-card">
+                            <input type="radio" name="skinType" value="dry" required>
+                            <div class="card-content">
+                                <i class="fas fa-wind"></i>
+                                <span>بشرة جافة</span>
+                            </div>
+                        </label>
+                        
+                        <label class="skin-type-card">
+                            <input type="radio" name="skinType" value="oily" required>
+                            <div class="card-content">
+                                <i class="fas fa-tint"></i>
+                                <span>بشرة دهنية</span>
+                            </div>
+                        </label>
+                        
+                        <label class="skin-type-card">
+                            <input type="radio" name="skinType" value="combination" required>
+                            <div class="card-content">
+                                <i class="fas fa-random"></i>
+                                <span>بشرة مختلطة</span>
+                            </div>
+                        </label>
+                        
+                        <label class="skin-type-card">
+                            <input type="radio" name="skinType" value="normal" required>
+                            <div class="card-content">
+                                <i class="fas fa-check-circle"></i>
+                                <span>بشرة عادية</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">العمر</label>
+                    <input type="number" id="age" min="13" max="100">
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender">الجنس</label>
+                    <select id="gender">
+                        <option value="female">أنثى</option>
+                        <option value="male">ذكر</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="prevStep(2, 1)">
+                        <i class="fas fa-arrow-right"></i> السابق
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-check"></i> إنشاء الحساب
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-footer">
+                <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script src="../js/services/auth.js"></script>
+    <script>
+        // Form step navigation
+        function nextStep(current, next) {
+            document.getElementById(`step${current}`).classList.remove('active');
+            document.getElementById(`step${next}`).classList.add('active');
+        }
+        
+        function prevStep(current, prev) {
+            document.getElementById(`step${current}`).classList.remove('active');
+            document.getElementById(`step${prev}`).classList.add('active');
+        }
+        
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                skinType: document.querySelector('input[name="skinType"]:checked').value,
+                age: document.getElementById('age').value,
+                gender: document.getElementById('gender').value
+            };
+            
+            // Validate password match
+            if (userData.password !== document.getElementById('confirmPassword').value) {
+                alert('كلمة المرور غير متطابقة');
+                return;
+            }
+            
+            // Register user
+            authService.register(userData)
+                .then(() => {
+                    window.location.href = '../analysis/camera.html';
+                })
+                .catch(error => {
+                    alert(error);
+                });
+        });
+    </script>
+</body>
+</html>
