@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاري التحليل</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/pages/analysis.css">
+</head>
+<body>
+    <div class="processing-container">
+        <div class="processing-content">
+            <div class="spinner">
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+                <div class="spinner-circle"></div>
+            </div>
+            <h2>جاري تحليل بشرتك</h2>
+            <p class="progress-text">جاري معالجة الصورة...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="estimated-time">الوقت المتبقي: <span id="timeRemaining">30</span> ثانية</p>
+            <button id="cancelBtn" class="btn-secondary">إلغاء</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import SkinAnalyzer from '../js/lib/tf-skin-analysis.js';
+        
+        const analyzer = new SkinAnalyzer();
+        const imageData = new URLSearchParams(window.location.search).get('image');
+        const img = new Image();
+        
+        img.onload = async () => {
+            try {
+                // Show analyzing status
+                document.querySelector('.progress-text').textContent = 'جاري تحليل الصورة...';
+                
+                // Perform actual analysis
+                const result = await analyzer.analyze(img);
+                
+                // Store results
+                localStorage.setItem('skinAnalysis', JSON.stringify({
+                    skinType: result.skinType,
+                    confidence: result.confidence,
+                    timestamp: new Date().toISOString()
+                }));
+                
+                // Redirect to results
+                window.location.href = `results.html?image=${encodeURIComponent(imageData)}`;
+            } catch (error) {
+                console.error('Analysis failed:', error);
+                document.querySelector('.progress-text').textContent = 'فشل في التحليل، يرجى المحاولة مرة أخرى';
+                document.getElementById('cancelBtn').textContent = 'حاول مرة أخرى';
+            }
+        };
+        
+        img.src = imageData;
+        
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            window.location.href = 'camera.html';
+        });
+    </script>
+</body>
+</html>
