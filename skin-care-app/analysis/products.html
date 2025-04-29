@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنتجات الموصى بها</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/pages/products.css">
+</head>
+<body>
+    <div class="products-container">
+        <div class="products-header">
+            <h1><i class="fas fa-gift"></i> المنتجات الموصى بها</h1>
+            <p>هذه المنتجات مناسبة لنوع بشرتك</p>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card" data-product-id="1">
+                <div class="product-image">
+                    <img src="../images/product1.jpg" alt="منتج العناية">
+                </div>
+                <div class="product-info">
+                    <h3>غسول الوجه اليومي</h3>
+                    <p class="product-description">غسول لطيف ينظف البشرة دون تجفيفها</p>
+                    <div class="product-price">75 د.ج</div>
+                    <button class="btn-primary add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-product-id="2">
+                <div class="product-image">
+                    <img src="../images/product2.jpg" alt="منتج العناية">
+                </div>
+                <div class="product-info">
+                    <h3>مرطب يومي</h3>
+                    <p class="product-description">يرطب البشرة لمدة 24 ساعة</p>
+                    <div class="product-price">120 د.ج</div>
+                    <button class="btn-primary add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-product-id="3">
+                <div class="product-image">
+                    <img src="../images/product3.jpg" alt="منتج العناية">
+                </div>
+                <div class="product-info">
+                    <h3>مصل فيتامين سي</h3>
+                    <p class="product-description">يضيء البشرة ويقلل التجاعيد</p>
+                    <div class="product-price">180 د.ج</div>
+                    <button class="btn-primary add-to-cart">إضافة إلى السلة</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="products-actions">
+            <a href="results.html" class="btn-secondary">
+                <i class="fas fa-arrow-right"></i> العودة للنتائج
+            </a>
+            <a href="../checkout.html" class="btn-primary">
+                <i class="fas fa-shopping-cart"></i> اتمام الشراء
+            </a>
+        </div>
+    </div>
+
+    <script src="../js/services/products.js"></script>
+</body>
+</html>
