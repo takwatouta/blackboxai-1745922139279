@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل البشرة</title>
+    <link rel="stylesheet" href="/css/pages/analysis.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="analysis-container">
+        <h1>تحليل نوع البشرة</h1>
+        
+        <div class="camera-view">
+            <div class="camera-wrapper">
+                <video id="cameraFeed" autoplay playsinline></video>
+                <canvas id="faceOverlay"></canvas>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="captureBtn" class="btn btn-primary">التقاط صورة</button>
+        </div>
+    </div>
+
+    <script src="/js/lib/face-api.min.js"></script>
+    <script src="/js/services/camera.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const cameraService = new CameraService();
+        cameraService.init();
+        
+        document.getElementById('captureBtn').addEventListener('click', () => {
+          const result = cameraService.captureImage();
+          if (result) {
+            // يمكنك هنا إضافة منطق معالجة الصورة الملتقطة
+            console.log('تم التقاط الصورة بنجاح:', result);
+            // توجيه المستخدم لصفحة النتائج
+            window.location.href = 'results.html';
+          }
+        });
+      });
+    </script>
+</body>
+</html>
