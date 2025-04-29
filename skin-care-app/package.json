@@ -1,0 +1,17 @@
+{
+  "name": "skin-care-app",
+  "version": "1.0.0",
+  "description": "تطبيق العناية بالبشرة",
+  "scripts": {
+    "build": "tailwindcss -i ./css/tailwind.css -o ./css/tailwind-built.css --minify",
+    "watch": "tailwindcss -i ./css/tailwind.css -o ./css/tailwind-built.css --watch",
+    "start": "python3 -m http.server 8000",
+    "dev": "concurrently \"npm run watch\" \"npm run start\""
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.1",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3"
+  }
+}
